@@ -1,5 +1,6 @@
 defmodule TestIex do
-  ## Copied from https://github.com/scottming/test_iex/blob/scott/lib/test_iex.ex
+  # credo:disable-for-this-file
+  # Copied from https://github.com/scottming/test_iex/blob/scott/lib/test_iex.ex
   @moduledoc """
   A utility module that helps you iterate faster on unit tests.
   This module lets execute specific tests from within a running iex shell to
@@ -17,6 +18,10 @@ defmodule TestIex do
 
     if File.exists?("test/test_helper.exs") do
       Code.eval_file("test/test_helper.exs", File.cwd!())
+    end
+
+    if File.exists?("lib/test_helper.exs") do
+      Code.eval_file("lib/test_helper.exs", File.cwd!())
     end
 
     :ok
