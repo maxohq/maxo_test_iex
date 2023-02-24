@@ -1,76 +1,41 @@
 defmodule TestIex do
-  # credo:disable-for-this-file
-  # Copied from https://github.com/scottming/test_iex/blob/scott/lib/test_iex.ex
   @moduledoc """
-  A utility module that helps you iterate faster on unit tests.
-  This module lets execute specific tests from within a running iex shell to
-  avoid needing to start and stop the whole application every time.
+  Allows running test files by substring of their names
   """
+  alias TestIex.Core
 
   @doc """
-  Starts the testing context.
-  ## Examples
-      iex> TestIex.start()
+  Run all test files
   """
-  def start() do
-    ExUnit.start()
-    Code.compiler_options(ignore_module_conflict: true)
-
-    if File.exists?("test/test_helper.exs") do
-      Code.eval_file("test/test_helper.exs", File.cwd!())
-    end
-
-    if File.exists?("lib/test_helper.exs") do
-      Code.eval_file("lib/test_helper.exs", File.cwd!())
-    end
-
-    :ok
+  def run() do 
+    run("")
   end
 
   @doc """
-  Loads or reloads testing helpers
-  ## Examples
-      iex> TestIex.load_helper(“test/test_helper.exs”)
+  Run all matching test files
   """
-  def load_helper(file_name) do
-    Code.eval_file(file_name, File.cwd!())
+  def run(matcher) do
+    Core.start()
+    files = matched(matcher)
+    IO.puts("RUNNING #{inspect(files)}")
+    Core.test(files)
   end
 
   @doc """
-  Runs a single test, a test file, or multiple test files
-  ## Example: Run a single test
-      iex> TestIex.test("./path/test/file/test_file_test.exs", line_number)
-  ## Example: Run a single test file
-      iex> TestIex.test("./path/test/file/test_file_test.exs")
-  ## Example: Run several test files:
-      iex> TestIex.test(["./path/test/file/test_file_test.exs", "./path/test/file/test_file_2_test.exs"])
+  Run the first matching test file with a `line` selector
   """
-  def test(path, line \\ nil)
-
-  def test(path, line) when is_binary(path) do
-    if line do
-      ExUnit.configure(exclude: [:test], include: [line: line])
-    else
-      ExUnit.configure(exclude: [], include: [])
-    end
-
-    IEx.Helpers.recompile()
-    Code.compile_file(path)
-    server_modules_loaded()
-    ExUnit.run()
+  def run(matcher, line) do
+    Core.start()
+    file = List.first(matched(matcher))
+    IO.puts("RUNNING #{inspect(file)} for line #{line}")
+    Core.test(file, line)
   end
 
-  def test(paths, _line) when is_list(paths) do
-    ExUnit.configure(exclude: [], include: [])
-    IEx.Helpers.recompile()
-    Enum.map(paths, &Code.compile_file/1)
-    server_modules_loaded()
-    ExUnit.run()
+  def matched(matcher) do
+    test_files() |> Enum.filter(fn x -> String.contains?(x, matcher) end)
   end
 
-  if System.version() > "1.14.1" do
-    defp server_modules_loaded(), do: ExUnit.Server.modules_loaded(false)
-  else
-    defp server_modules_loaded(), do: ExUnit.Server.modules_loaded()
+  def test_files do
+    Path.wildcard("./test/**/**_test.exs") ++ Path.wildcard("./lib/**/**_test.exs")
   end
 end

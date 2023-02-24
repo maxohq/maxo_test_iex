@@ -1,21 +1,28 @@
 # TestIex
 
-**TODO: Add description**
+
+## Usage
+
+
+```elixir
+$ MIX_ENV=test iex -S mix
+
+# run all 
+iex> TestIex.run
+
+# run matching files
+iex> TestIex.run("word")
+
+# run test on line 45 for first matchin file
+iex> TestIex.run("word", 45)
+```
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `test_iex` to your list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:test_iex, "~> 0.1.0"}
+    {:test_iex, github: "mindreframer/test_iex", only: [:test]}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/test_iex>.
-
