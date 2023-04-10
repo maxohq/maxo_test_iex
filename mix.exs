@@ -31,7 +31,7 @@ defmodule TestIex.MixProject do
       licenses: ["MIT"],
       links: %{
         "Github" => @github_url,
-        "CHANGELOG" => "#{@github_url}/blob/main/CHANGELOG.md"
+        "Changelog" => "#{@github_url}/blob/main/CHANGELOG.md"
       }
     ]
   end
