@@ -1,13 +1,20 @@
 defmodule TestIex.MixProject do
   use Mix.Project
 
+  @github_url "https://github.com/mindreframer/test_iex"
+  @version "0.1.0"
+  @description "Run ExUnit tests from IEx shell."
+
   def project do
     [
-      app: :test_iex,
-      version: "0.1.0",
+      app: :maxo_test_iex,
+      source_url: @github_url,
+      version: @version,
+      description: @description,
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      package: package()
     ]
   end
 
@@ -18,11 +25,21 @@ defmodule TestIex.MixProject do
     ]
   end
 
+  defp package do
+    [
+      files: ~w(lib mix.exs README* CHANGELOG*),
+      licenses: ["MIT"],
+      links: %{
+        "Github" => @github_url,
+        "CHANGELOG" => "#{@github_url}/blob/main/CHANGELOG.md"
+      }
+    ]
+  end
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"}
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
     ]
   end
 end
