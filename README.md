@@ -10,10 +10,10 @@ $ MIX_ENV=test iex -S mix
 # run all 
 iex> TestIex.run
 
-# run matching files
+# run all matching files
 iex> TestIex.run("word")
 
-# run test on line 45 for first matchin file
+# run test on line 45 for the first matching file
 iex> TestIex.run("word", 45)
 ```
 
