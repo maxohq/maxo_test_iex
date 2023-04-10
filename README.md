@@ -22,7 +22,7 @@ iex> TestIex.run("word", 45)
 ```elixir
 def deps do
   [
-    {:test_iex, github: "mindreframer/test_iex", only: [:test]}
+    {:maxo_test_iex, "~> 0.1", only: [:test]},
   ]
 end
 ```
