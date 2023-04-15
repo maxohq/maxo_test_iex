@@ -1,6 +1,8 @@
-[![Hex.pm](https://img.shields.io/hexpm/v/maxo_test_iex.svg)](https://hex.pm/packages/maxo_test_iex)
-[![Docs](https://img.shields.io/badge/hexdocs-docs-8e7ce6.svg)](https://hexdocs.pm/maxo_test_iex)
-[![CI](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml/badge.svg)](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml)
+[![Hex.pm](https://img.shields.io/hexpm/v/maxo_test_iex.svg?style=flat)](https://hex.pm/packages/maxo_test_iex)
+[![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg?style=flat)](https://hexdocs.pm/maxo_test_iex/)
+[![Total Download](https://img.shields.io/hexpm/dt/maxo_test_iex.svg?style=flat)](https://hex.pm/packages/maxo_test_iex)
+[![License](https://img.shields.io/hexpm/l/maxo_test_iex.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/blob/main/LICENSE)
+[![CI](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml/badge.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml)
 
 # TestIex
 
