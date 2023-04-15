@@ -1,2 +1,2 @@
 ExUnit.start(trace: true)
-Mneme.start()
+Mneme.start(restart: true)

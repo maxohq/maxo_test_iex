@@ -41,7 +41,7 @@ defmodule TestIex.MixProject do
     [
       {:bunt, "~> 0.2"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
-      {:mneme, "0.3.0", only: [:dev, :test]}
+      {:mneme, "0.3.1", only: [:dev, :test]}
     ]
   end
 end
