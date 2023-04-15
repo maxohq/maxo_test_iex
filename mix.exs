@@ -39,7 +39,9 @@ defmodule TestIex.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.29", only: :dev, runtime: false}
+      {:bunt, "~> 0.2"},
+      {:ex_doc, "~> 0.29", only: :dev, runtime: false},
+      {:mneme, "0.3.0", only: [:dev, :test]}
     ]
   end
 end
