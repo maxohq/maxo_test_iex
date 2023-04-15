@@ -1,3 +1,7 @@
+[![Hex.pm](https://img.shields.io/hexpm/v/maxo_test_iex.svg)](https://hex.pm/packages/maxo_test_iex)
+[![Docs](https://img.shields.io/badge/hexdocs-docs-8e7ce6.svg)](https://hexdocs.pm/maxo_test_iex)
+[![CI](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml/badge.svg)](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml)
+
 # TestIex
 
 ## Usage
