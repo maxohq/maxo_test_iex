@@ -1,7 +1,7 @@
 defmodule TestIex.MixProject do
   use Mix.Project
 
-  @github_url "https://github.com/mindreframer/maxo_test_iex"
+  @github_url "https://github.com/maxohq/maxo_test_iex"
   @version "0.1.1"
   @description "Run ExUnit tests from IEx shell."
 
