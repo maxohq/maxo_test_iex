@@ -49,6 +49,8 @@ jobs:
             ${{ runner.os }}-mix-
       # - run: rm -rf _build
       # - run: rm -rf deps
+
+      - run: sudo apt-get install inotify-tools
       - run: mix deps.get
       - run: mix deps.compile
       - run: mix format --check-formatted
