@@ -8,40 +8,7 @@
 
 TestIex is an interactive ExUnit test runner, that provides following features:
 
-- rapid feedback:
-
-  - since there is no re-incurring cost of starting an OS process with Elixir + Mix + your code for every run
-
-- robust
-
-  - it does code recompilation + loading of tests in a predictable manner
-
-- low - tech:
-
-  - it does not require a particular editor extension or similar. Just simple Elixir + ExUnit in your terminal.
-  - your workflow wont have to change in future, since the foundation for TestIex is very stable:
-    - ExUnit + file system watching + Iex
-
-- maintainable:
-
-  - since it requires very little code, it's very easy to maintain and adjust on new Elixir releases
-  - the core is in [TestIex.Core](https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/core.ex).
-  - It is less than 40 lines of Elixir code with lots of docs.
-
-- with sensible defaults:
-
-  - you wont have to spend a lot of time to get it configured. Default configs provide great experience for the majority of Elixir projects
-
-- flexible:
-
-  - should you have some special needs, there are config options to tune.
-  - they are all conveniently kept in a single module [TestIex.Config](https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/config.ex).
-  - heck, you could even swap the TestIex.Core module, if desired! It exposes only 3 public functions:
-    - start()
-    - test(files)
-    - test(file, line)
-
-- easy to learn:
+- Easy to learn:
 
   - the public API consists of 3 functions:
     - TestIex.run(matcher // "")
@@ -50,7 +17,37 @@ TestIex is an interactive ExUnit test runner, that provides following features:
     - TestIex.watch(matcher, line)
     - TestIex.unwatch()
 
-- Test file co-location support:
+- Rapid feedback:
+
+  - since there is no re-incurring cost of starting an OS process with Elixir + Mix + your code for every run
+
+- With sensible defaults:
+
+  - you won't have to spend a lot of time to get it configured. Default configs provide great experience for the majority of Elixir projects
+
+- Usable
+
+  - File event de-duplication during watch mode means you only run tests once, even if there are rapid multiple consecutive file events for a single file
+
+- Robust
+
+  - it does code recompilation + loading of tests in a predictable manner
+
+- Flexible:
+
+  - should you have some special needs, there are config options to tune.
+  - they are all conveniently kept in a single module [TestIex.Config](https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/config.ex).
+  - heck, you could even swap the TestIex.Core module, if desired! It exposes only 3 public functions:
+    - start()
+    - test(files)
+    - test(file, line)
+
+- Inspectable
+
+  - you can turn on debug logs to see what happens
+  - this helps you to narrow down issues with your configuration
+
+- Support for test file co-location:
 
   - it comes with support for co-located ExUnit tests out of the box!
   - Examples of real-life projects using co-located test files
@@ -62,6 +59,24 @@ TestIex is an interactive ExUnit test runner, that provides following features:
 
   - Now you're running!
   - This pattern is very common in Golang / JS / TypeScript and we think it should be also more common in the Elixir community.
+
+- Low - tech:
+
+  - it does not require a particular editor extension or similar. Just simple Elixir + ExUnit in your terminal.
+  - your workflow wont have to change in future, since the foundation for TestIex is very stable:
+    - ExUnit + file system watching + Iex
+
+- Maintainable:
+
+  - since it requires very little code, it's very easy to maintain and adjust on new Elixir releases
+  - the core is in [TestIex.Core](https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/core.ex).
+  - It is less than 40 lines of Elixir code with lots of docs.
+  - besides it does not have any hairy GenServer logic and also has no ambitions to grow more features and become more complex
+  - by not supporting umbrella projects, we keep the code complexity much lower
+  - every Elixir project is considered to be in a single root folder with
+    following directories under it:
+    - `lib`
+    - `test`
 
 Please give it a try and see if you like it!
 
@@ -103,8 +118,15 @@ if config_env() == :test do
   # for default values look into: https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/config.ex
   # NO need to watch for tests on CI
   if System.get_env("CI"), do: config :maxo_test_iex, watcher_enable: false
+
+  # how long multiple consecutive events on the same file should be considered duplicates?
   config :maxo_test_iex, watcher_dedup_timeout: 500
+
+  # which file changes should trigger a test re-run?
   config :maxo_test_iex, watcher_args: [dirs: ["lib/", "test/"], latency: 0]
+
+  # should we log debug messages?
+  config :maxo_test_iex, debug: false
 end
 ```
 
