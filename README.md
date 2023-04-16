@@ -45,6 +45,14 @@ if config_env() == :test do
 end
 ```
 
+## CI
+
+- for CI you'll need to install inotify. On Github Actions it looks like this:
+
+```bash
+- run: sudo apt-get install inotify-tools
+```
+
 ## Installation
 
 ```elixir
