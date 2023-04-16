@@ -37,8 +37,12 @@ iex> TestIex.unwatch()
 ## Configuration
 
 ```elixir
-# in config/config.exs
-config :maxo_test_iex, event_dedup_timeout: 2000
+# in config/runtime.exs
+import Config
+
+if config_env() == :test do
+  config :maxo_test_iex, event_dedup_timeout: 500
+end
 ```
 
 ## Installation
