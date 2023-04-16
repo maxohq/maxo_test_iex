@@ -14,16 +14,14 @@ defmodule TestIex.Core do
   def start() do
     ExUnit.start()
     Code.compiler_options(ignore_module_conflict: true)
-
-    if File.exists?("test/test_helper.exs") do
-      load_helper("test/test_helper.exs")
-    end
-
-    if File.exists?("lib/test_helper.exs") do
-      load_helper("lib/test_helper.exs")
-    end
+    load_existing_helper("test/test_helper.exs")
+    load_existing_helper("lib/test_helper.exs")
 
     :ok
+  end
+
+  def load_existing_helper(helper) do
+    if File.exists?(helper), do: load_helper(helper)
   end
 
   @doc """
