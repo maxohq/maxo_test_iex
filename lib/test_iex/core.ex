@@ -45,24 +45,28 @@ defmodule TestIex.Core do
   def test(path, line \\ nil)
 
   def test(path, line) when is_binary(path) do
-    if line do
-      ExUnit.configure(exclude: [:test], include: [line: line])
-    else
-      ExUnit.configure(exclude: [], include: [])
-    end
-
-    IEx.Helpers.recompile()
-    Code.compile_file(path)
-    server_modules_loaded()
-    ExUnit.run()
+    configure_ex_unit(line)
+    run_test_files([path])
   end
 
   def test(paths, _line) when is_list(paths) do
-    ExUnit.configure(exclude: [], include: [])
+    configure_ex_unit()
+    run_test_files(paths)
+  end
+
+  defp run_test_files(paths) do
     IEx.Helpers.recompile()
     Enum.map(paths, &Code.compile_file/1)
     server_modules_loaded()
     ExUnit.run()
+  end
+
+  defp configure_ex_unit(line) do
+    ExUnit.configure(exclude: [:test], include: [line: line])
+  end
+
+  defp configure_ex_unit() do
+    ExUnit.configure(exclude: [], include: [])
   end
 
   if System.version() > "1.14.1" do
