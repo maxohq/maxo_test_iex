@@ -11,21 +11,27 @@
 ```elixir
 $ MIX_ENV=test iex -S mix
 
-# run all
+# Run all tests
 iex> TestIex.run
 
-# run all matching files
+# Run all matching files
 iex> TestIex.run("word")
 
-# run test on line 45 for the first matching file
+# Run test on line 45 for the first matching file
 iex> TestIex.run("word", 45)
 
-# run test on line 45 for the first matching file
+# Run test on line 45 for the first matching file
 iex> TestIex.run("users_test.exs:45")
 
-# run test on line 45 for the first matching file
+# Run test on line 45 for the first matching file
 iex> TestIex.run("users:45")
 
+# Watching on file changes and re-running tests.
+# Currently only .ex / .exs files in `lib` or `test` folders trigger a re-run.
+iex> TestIex.watch("users:45")
+
+# Reset watching
+iex> TestIex.unwatch()
 ```
 
 ## Installation

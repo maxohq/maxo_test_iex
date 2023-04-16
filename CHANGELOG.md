@@ -1,3 +1,7 @@
+## v0.1.2 (2023-04-16)
+
+- flexible file watcher [experimental, without de-bouncing or other robust features]
+
 ## v0.1.1 (2023-04-15)
 
 - coloured logs
