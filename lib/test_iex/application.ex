@@ -1,7 +1,3 @@
-# TestIex.Watcher.start_link(dirs: ["lib/", "test/"], latency: 0)
-# TestIex.Watcher.start_link(dirs: ["lib/", "test/"])
-# TestIex.Watcher.set_command(fn -> TestIex.run("test") end)
-
 defmodule TestIex.Application do
   @moduledoc false
   use Application
