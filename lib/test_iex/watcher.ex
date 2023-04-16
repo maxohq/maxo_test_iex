@@ -34,7 +34,7 @@ defmodule TestIex.Watcher do
         {:file_event, watcher_pid, {path, events}},
         %State{watcher_pid: watcher_pid} = state
       ) do
-    TestIex.Log.log_msg("file_event " <> inspect({path, events}))
+    TestIex.Log.debug("file_event " <> inspect({path, events}))
 
     if should_run?(state, {path, events}) do
       try do
@@ -44,7 +44,7 @@ defmodule TestIex.Watcher do
           Logger.error(Exception.format(:error, e, __STACKTRACE__))
       end
     else
-      TestIex.Log.log_msg("Skipping duplicate event for #{path}")
+      TestIex.Log.debug("Skipping duplicate event for #{path}")
     end
 
     new_last_event = {path, events, now_in_ms()}

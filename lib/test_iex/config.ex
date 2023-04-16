@@ -4,7 +4,10 @@ defmodule TestIex.Config do
   """
 
   @doc false
-  def core_module(), do: Application.get_env(:maxo_test_iex, :core, TestIex.Core)
+  def debug(), do: from_env(:debug, true)
+
+  @doc false
+  def core_module(), do: from_env(:core, TestIex.Core)
 
   @doc """
   FS events deduplication frame, so that we do not trigger too many test runs on file changes.
@@ -12,8 +15,7 @@ defmodule TestIex.Config do
   defaults:
     `500`
   """
-  def watcher_dedup_timeout(),
-    do: Application.get_env(:maxo_test_iex, :watcher_dedup_timeout, 500)
+  def watcher_dedup_timeout(), do: from_env(:watcher_dedup_timeout, 500)
 
   @doc """
   Should the watcher be started?
@@ -21,8 +23,7 @@ defmodule TestIex.Config do
   defaults:
     `true`
   """
-  def watcher_enable(),
-    do: Application.get_env(:maxo_test_iex, :watcher_enable, true)
+  def watcher_enable(), do: from_env(:watcher_enable, true)
 
   @doc """
   Watcher args, that are passed directly to `:file_system` package.
@@ -31,8 +32,7 @@ defmodule TestIex.Config do
   defaults:
     - `[dirs: ["lib/", "test/"], latency: 0]`
   """
-  def watcher_args(),
-    do: Application.get_env(:maxo_test_iex, :watcher_args, dirs: ["lib/", "test/"], latency: 0)
+  def watcher_args(), do: from_env(:watcher_args, dirs: ["lib/", "test/"], latency: 0)
 
   @doc """
   Which test files should be matched? List of path globs, compatible with `Path.wildcard`
@@ -45,8 +45,12 @@ defmodule TestIex.Config do
   """
   def test_file_globs(),
     do:
-      Application.get_env(:maxo_test_iex, :test_file_globs, [
+      from_env(:test_file_globs, [
         "./test/**/**_test.exs",
         "./lib/**/**_test.exs"
       ])
+
+  def from_env(val, default) do
+    Application.get_env(:maxo_test_iex, val, default)
+  end
 end

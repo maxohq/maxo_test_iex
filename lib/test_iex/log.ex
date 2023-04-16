@@ -1,4 +1,15 @@
 defmodule TestIex.Log do
+  alias TestIex.Config
+  require Logger
+
+  def debug(msg) do
+    if Config.debug() do
+      [msg]
+      |> colorize()
+      |> Logger.debug()
+    end
+  end
+
   def log_msg(msg), do: log([msg])
 
   def log_file_and_line(file, line) do
@@ -25,6 +36,12 @@ defmodule TestIex.Log do
   end
 
   defp log(parts) when is_list(parts) do
+    parts
+    |> colorize()
+    |> Logger.info()
+  end
+
+  def colorize(parts) when is_list(parts) do
     ([
        :bright,
        :green,
@@ -32,6 +49,5 @@ defmodule TestIex.Log do
        :default_color
      ] ++ parts)
     |> IO.ANSI.format()
-    |> IO.puts()
   end
 end
