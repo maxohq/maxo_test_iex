@@ -1,4 +1,6 @@
 defmodule TestIex.Log do
+  def log_msg(msg), do: log([msg])
+
   def log_file_and_line(file, line) do
     log([
       " Running ",

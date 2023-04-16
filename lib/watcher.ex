@@ -1,4 +1,9 @@
 defmodule TestIex.Watcher do
+  @moduledoc """
+  Watcher for file events + evtl. running a configured `cmd` function
+  """
+  require Logger
+
   defmodule State do
     defstruct watcher_pid: nil, cmd: nil, last_event: nil
   end
@@ -28,12 +33,17 @@ defmodule TestIex.Watcher do
         {:file_event, watcher_pid, {path, events}},
         %State{watcher_pid: watcher_pid} = state
       ) do
-    IO.inspect({path, events}, label: "file_event")
+    TestIex.Log.log_msg("file_event " <> inspect({path, events}))
 
     if should_run?(state, {path, events}) do
-      state.cmd.()
+      try do
+        state.cmd.()
+      rescue
+        e ->
+          Logger.error(Exception.format(:error, e, __STACKTRACE__))
+      end
     else
-      IO.puts("[test_iex] skipping duplicate event for #{path}")
+      TestIex.Log.log_msg("Skipping duplicate event for #{path}")
     end
 
     new_last_event = {path, events, now_in_ms()}
@@ -43,7 +53,7 @@ defmodule TestIex.Watcher do
   end
 
   def handle_info({:file_event, watcher_pid, :stop}, %{watcher_pid: watcher_pid} = state) do
-    IO.inspect("STOPPING WATCHER? #{inspect(watcher_pid)}", label: "file_event")
+    TestIex.Log.log_msg("file_event: STOPPING WATCHER #{inspect(watcher_pid)}")
     {:noreply, state}
   end
 
