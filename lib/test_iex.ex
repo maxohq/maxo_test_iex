@@ -59,6 +59,9 @@ defmodule TestIex do
   ##
   ## WATCHING
   ##
+
+  def watch(), do: watch("")
+
   def watch(matcher) do
     cmd = fn -> TestIex.run(matcher) end
     TestIex.Watcher.set_command(cmd)
