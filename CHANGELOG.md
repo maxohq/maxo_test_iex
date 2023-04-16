@@ -1,14 +1,18 @@
+## v0.1.3 (2023-04-16)
+
+- feat: file event watcher de-duplication
+
 ## v0.1.2 (2023-04-16)
 
-- flexible file watcher [experimental, without de-bouncing or other robust features]
+- feat: flexible file watcher [experimental, without de-bouncing or other robust features]
 
 ## v0.1.1 (2023-04-15)
 
-- coloured logs
-- matching on copy-pasted `file:line` strings from ExUnit exceptions, like:
+- feat: coloured logs
+- feat: matching on copy-pasted `file:line` strings from ExUnit exceptions, like:
   `lib/users/user_test.exs:54`
-- unit tests
-- Github CI
+- feat: unit tests
+- feat: Github CI
 
 ## v0.1.0 (2023-04-10)
 
