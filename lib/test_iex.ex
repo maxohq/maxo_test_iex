@@ -56,6 +56,26 @@ defmodule TestIex do
     core_module().test(file, line)
   end
 
+  ##
+  ## WATCHING
+  ##
+  def watch(matcher) do
+    cmd = fn -> TestIex.run(matcher) end
+    TestIex.Watcher.set_command(cmd)
+  end
+
+  def watch(matcher, line) do
+    cmd = fn -> TestIex.run("#{matcher}:#{line}") end
+    TestIex.Watcher.set_command(cmd)
+  end
+
+  def unwatch() do
+    TestIex.Watcher.set_command(nil)
+  end
+
+  ##
+  ## Public just for introspection, internal functions
+  ##
   def test_files do
     Path.wildcard("./test/**/**_test.exs") ++ Path.wildcard("./lib/**/**_test.exs")
   end

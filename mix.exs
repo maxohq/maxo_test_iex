@@ -21,7 +21,8 @@ defmodule TestIex.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {TestIex.Application, []}
     ]
   end
 
@@ -40,6 +41,7 @@ defmodule TestIex.MixProject do
   defp deps do
     [
       {:bunt, "~> 0.2"},
+      {:file_system, "~> 0.2"},
       {:ex_doc, "~> 0.29", only: :dev, runtime: false},
       {:mneme, "0.3.1", only: [:dev, :test]}
     ]
