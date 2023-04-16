@@ -80,7 +80,9 @@ defmodule TestIex do
   ## Public just for introspection, internal functions
   ##
   def test_files do
-    Path.wildcard("./test/**/**_test.exs") ++ Path.wildcard("./lib/**/**_test.exs")
+    Enum.reduce(TestIex.Config.test_file_globs(), [], fn path, acc ->
+      acc ++ Path.wildcard(path)
+    end)
   end
 
   def core_module(), do: TestIex.Config.core_module()

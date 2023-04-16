@@ -19,4 +19,20 @@ defmodule TestIex.Config do
   """
   def watcher_args(),
     do: Application.get_env(:maxo_test_iex, :watcher_args, dirs: ["lib/", "test/"], latency: 0)
+
+  @doc """
+  Which test files should be matched? List of path globs, compatible with `Path.wildcard`
+
+  defaults:
+    `[
+      "./test/**/**_test.exs",
+      "./lib/**/**_test.exs"
+    ]`
+  """
+  def test_file_globs(),
+    do:
+      Application.get_env(:maxo_test_iex, :test_file_globs, [
+        "./test/**/**_test.exs",
+        "./lib/**/**_test.exs"
+      ])
 end
