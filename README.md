@@ -10,7 +10,7 @@ TestIex is an interactive ExUnit test runner, that provides following features:
 
 - rapid feedback:
 
-  - since there is no re-incurring cost of starting an OS process with Elixir + Mix + your code
+  - since there is no re-incurring cost of starting an OS process with Elixir + Mix + your code for every run
 
 - robust
 
@@ -50,7 +50,7 @@ TestIex is an interactive ExUnit test runner, that provides following features:
     - TestIex.watch(matcher, line)
     - TestIex.unwatch()
 
-- Test file collocation support:
+- Test file co-location support:
 
   - it comes with support for co-located ExUnit tests out of the box!
   - Examples of real-life projects using co-located test files

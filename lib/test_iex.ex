@@ -33,7 +33,6 @@ defmodule TestIex do
 
     # same as
     iex> TestIex.run("user:40")
-
   """
   def run(matcher, line) do
     run("#{matcher}:#{line}")
@@ -54,6 +53,11 @@ defmodule TestIex do
   ##
   ## WATCHING
   ##
+
+  @doc """
+  Set which test files / lines should run on each file change
+  `TestIex.Config.test_file_globs()` defines which files would trigger a re-run
+  """
   def watch(matcher \\ "") do
     cmd = fn -> TestIex.run(matcher) end
     TestIex.Watcher.set_command(cmd)
@@ -64,6 +68,9 @@ defmodule TestIex do
     TestIex.Watcher.set_command(cmd)
   end
 
+  @doc """
+  Stop watching changes on files
+  """
   def unwatch() do
     TestIex.Watcher.set_command(nil)
   end

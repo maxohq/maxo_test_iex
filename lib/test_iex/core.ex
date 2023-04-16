@@ -20,19 +20,6 @@ defmodule TestIex.Core do
     :ok
   end
 
-  def load_existing_helper(helper) do
-    if File.exists?(helper), do: load_helper(helper)
-  end
-
-  @doc """
-  Loads or reloads testing helpers
-  ## Examples
-      iex> TestIex.load_helper(“test/test_helper.exs”)
-  """
-  def load_helper(file_name) do
-    Code.eval_file(file_name, File.cwd!())
-  end
-
   @doc """
   Runs a single test, a test file, or multiple test files
   ## Example: Run a single test
@@ -54,6 +41,14 @@ defmodule TestIex.Core do
     run_test_files(paths)
   end
 
+  ## Private functions
+
+  defp load_existing_helper(helper) do
+    if File.exists?(helper), do: load_helper(helper)
+  end
+
+  defp load_helper(file_name), do: Code.eval_file(file_name, File.cwd!())
+
   defp run_test_files(paths) do
     IEx.Helpers.recompile()
     Enum.map(paths, &Code.compile_file/1)
@@ -61,12 +56,12 @@ defmodule TestIex.Core do
     ExUnit.run()
   end
 
-  defp configure_ex_unit(line) do
-    ExUnit.configure(exclude: [:test], include: [line: line])
-  end
-
   defp configure_ex_unit() do
     ExUnit.configure(exclude: [], include: [])
+  end
+
+  defp configure_ex_unit(line) do
+    ExUnit.configure(exclude: [:test], include: [line: line])
   end
 
   if System.version() > "1.14.1" do

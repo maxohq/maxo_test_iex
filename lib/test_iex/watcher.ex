@@ -1,14 +1,15 @@
+defmodule TestIex.Watcher.State do
+  defstruct watcher_pid: nil, cmd: nil, last_event: nil
+end
+
 defmodule TestIex.Watcher do
   @moduledoc """
   Watcher for file events + evtl. running a configured `cmd` function
   """
-  require Logger
-
-  defmodule State do
-    defstruct watcher_pid: nil, cmd: nil, last_event: nil
-  end
 
   use GenServer
+  alias TestIex.Watcher.State
+  require Logger
 
   def start_link(args) do
     GenServer.start_link(__MODULE__, args, name: __MODULE__)

@@ -6,7 +6,6 @@ defmodule TestIex.Application do
   @impl true
   def start(_type, _args) do
     children = start_watcher_if_needed(Config.watcher_enable())
-
     opts = [strategy: :one_for_one, name: TestIex.Supervisor]
     Supervisor.start_link(children, opts)
   end
