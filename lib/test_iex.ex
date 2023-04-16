@@ -7,11 +7,6 @@ defmodule TestIex do
   alias TestIex.Log
 
   @doc """
-  Run all test files
-  """
-  def run(), do: run("")
-
-  @doc """
   Run all matching test files
 
   Examples:
@@ -20,7 +15,7 @@ defmodule TestIex do
     iex> TestIex.run("user_test.exs")
     iex> TestIex.run("some_file:12")
   """
-  def run(matcher) do
+  def run(matcher \\ "") do
     result = Matcher.match(matcher, test_files())
 
     case result do
@@ -59,10 +54,7 @@ defmodule TestIex do
   ##
   ## WATCHING
   ##
-
-  def watch(), do: watch("")
-
-  def watch(matcher) do
+  def watch(matcher \\ "") do
     cmd = fn -> TestIex.run(matcher) end
     TestIex.Watcher.set_command(cmd)
   end
