@@ -115,7 +115,9 @@ iex> TestIex.unwatch()
 import Config
 
 if config_env() == :test do
-  # for default values look into: https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/config.ex
+  # for default values look into:
+  # - https://github.com/maxohq/maxo_test_iex/blob/main/lib/test_iex/config.ex
+
   # NO need to watch for tests on CI
   if System.get_env("CI"), do: config :maxo_test_iex, watcher_enable: false
 
@@ -124,6 +126,9 @@ if config_env() == :test do
 
   # which file changes should trigger a test re-run?
   config :maxo_test_iex, watcher_args: [dirs: ["lib/", "test/"], latency: 0]
+
+  # which file extensions are relevant to trigger a test re-run?
+  config :maxo_test_iex, watcher_extensions: [".ex", ".exs"]
 
   # should we log debug messages?
   config :maxo_test_iex, debug: false

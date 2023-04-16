@@ -35,6 +35,14 @@ defmodule TestIex.Config do
   def watcher_args(), do: from_env(:watcher_args, dirs: ["lib/", "test/"], latency: 0)
 
   @doc """
+  Which file extentions do we consider relevant for re-running tests?
+
+  defaults:
+    - `[".ex", ".exs"]`
+  """
+  def watcher_extensions, do: from_env(:watcher_extensions, [".ex", ".exs"])
+
+  @doc """
   Which test files should be matched? List of path globs, compatible with `Path.wildcard`
 
   defaults:

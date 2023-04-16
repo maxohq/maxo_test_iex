@@ -8,7 +8,11 @@ defmodule TestIex.Watcher do
   """
 
   use GenServer
+
+  alias TestIex.Config
+  alias TestIex.Log
   alias TestIex.Watcher.State
+
   require Logger
 
   def start_link(args) do
@@ -18,7 +22,7 @@ defmodule TestIex.Watcher do
   def init(args) do
     {:ok, watcher_pid} = FileSystem.start_link(args)
     FileSystem.subscribe(watcher_pid)
-    {:ok, %State{watcher_pid: watcher_pid, cmd: nil, last_event: nil}}
+    {:ok, state_default(watcher_pid)}
   end
 
   def set_command(fun) do
@@ -26,40 +30,31 @@ defmodule TestIex.Watcher do
   end
 
   def handle_call({:set_command, fun}, _, %State{} = state) do
-    state = %State{state | cmd: fun}
-    {:reply, :ok, state}
+    {:reply, :ok, state_cmd(state, fun)}
   end
 
   def handle_info(
-        {:file_event, watcher_pid, {path, events}},
-        %State{watcher_pid: watcher_pid} = state
+        {:file_event, w_pid, {path, events} = fs_event},
+        %State{watcher_pid: w_pid} = state
       ) do
-    TestIex.Log.debug("file_event " <> inspect({path, events}))
+    Log.debug("file_event " <> inspect(fs_event))
+    exec_if_needed(state, fs_event)
 
-    if should_run?(state, {path, events}) do
-      try do
-        state.cmd.()
-      rescue
-        e ->
-          Logger.error(Exception.format(:error, e, __STACKTRACE__))
-      end
-    else
-      TestIex.Log.debug("Skipping duplicate event for #{path}")
-    end
-
-    new_last_event = {path, events, now_in_ms()}
-    state = %State{state | last_event: new_last_event}
-
-    {:noreply, state}
+    {:noreply, state_evt(state, {path, events, now_in_ms()})}
   end
 
   def handle_info({:file_event, watcher_pid, :stop}, %{watcher_pid: watcher_pid} = state) do
-    TestIex.Log.log_msg("file_event: STOPPING WATCHER #{inspect(watcher_pid)}")
     {:noreply, state}
   end
 
+  defp exec_if_needed(state, {path, events}) do
+    if should_run?(state, {path, events}),
+      do: safe_exec(state.cmd),
+      else: Log.debug("Skipping duplicate event for #{path}")
+  end
+
   defp should_run?(%State{} = state, {path, events}) do
-    code_file = Path.extname(path) in [".ex", ".exs"]
+    code_file = Path.extname(path) in Config.watcher_extensions()
     cmd_set = state.cmd != nil
     duplicate = duplicate_event?(state.last_event, {path, events})
 
@@ -74,11 +69,19 @@ defmodule TestIex.Watcher do
     l_path == path && now_in_ms() - l_time < watcher_dedup_timeout()
   end
 
-  defp now_in_ms do
-    DateTime.utc_now() |> DateTime.to_unix(:millisecond)
-  end
+  defp state_default(watcher_pid), do: %State{watcher_pid: watcher_pid}
+  defp state_cmd(state, cmd), do: %State{state | cmd: cmd}
+  defp state_evt(state, evt), do: %State{state | last_event: evt}
 
-  defp watcher_dedup_timeout do
-    TestIex.Config.watcher_dedup_timeout()
+  defp now_in_ms, do: DateTime.to_unix(DateTime.utc_now(), :millisecond)
+  defp watcher_dedup_timeout, do: Config.watcher_dedup_timeout()
+
+  defp safe_exec(fun) do
+    try do
+      fun.()
+    rescue
+      e ->
+        Logger.error(Exception.format(:error, e, __STACKTRACE__))
+    end
   end
 end
