@@ -1,3 +1,7 @@
+## v0.1.4 (2023-04-16)
+
+- feat: configurable deduplication timeout for file events
+
 ## v0.1.3 (2023-04-16)
 
 - feat: file event watcher de-duplication

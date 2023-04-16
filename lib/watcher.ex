@@ -59,11 +59,15 @@ defmodule TestIex.Watcher do
   defp duplicate_event?(nil, {_path, _events}), do: false
 
   defp duplicate_event?({l_path, _l_events, l_time}, {path, _events}) do
-    # same path + less than 5 seconds ago executed
-    l_path == path && now_in_ms() - l_time < 5000
+    # same path + less than dedup_timeout_ms ago executed
+    l_path == path && now_in_ms() - l_time < event_dedup_timeout_ms()
   end
 
   defp now_in_ms do
     DateTime.utc_now() |> DateTime.to_unix(:millisecond)
+  end
+
+  defp event_dedup_timeout_ms do
+    TestIex.Config.event_dedup_timeout()
   end
 end

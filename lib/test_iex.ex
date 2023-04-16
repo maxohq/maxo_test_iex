@@ -80,5 +80,5 @@ defmodule TestIex do
     Path.wildcard("./test/**/**_test.exs") ++ Path.wildcard("./lib/**/**_test.exs")
   end
 
-  def core_module(), do: Application.get_env(:maxo_test_iex, :core, TestIex.Core)
+  def core_module(), do: TestIex.Config.core_module()
 end

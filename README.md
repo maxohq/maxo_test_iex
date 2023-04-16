@@ -34,6 +34,13 @@ iex> TestIex.watch("users:45")
 iex> TestIex.unwatch()
 ```
 
+## Configuration
+
+```elixir
+# in config/config.exs
+config :maxo_test_iex, event_dedup_timeout: 2000
+```
+
 ## Installation
 
 ```elixir
