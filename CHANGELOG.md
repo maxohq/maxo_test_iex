@@ -1,3 +1,15 @@
+## v0.1.6 (2023-04-20)
+
+Feat: add config for watcher_extensions + refactorings
+Feat: better docs / readme
+Feat: add a `:debug` config for verbose logging
+Refact: TestIex.run / watch with defaults
+Refact: refactoring for TestIex.Core module
+Feat: make test files selector configurable
+Feat: configure CI to not start TestIex.Watcher process
+Feat: more consistent config var naming
+Feat: prevent watcher from starting
+
 ## v0.1.5 (2023-04-16)
 
 - fix: do not fail on test compilation errors
