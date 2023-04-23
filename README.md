@@ -1,8 +1,8 @@
+[![CI](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml/badge.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml)
 [![Hex.pm](https://img.shields.io/hexpm/v/maxo_test_iex.svg?style=flat)](https://hex.pm/packages/maxo_test_iex)
 [![Hex Docs](https://img.shields.io/badge/hex-docs-lightgreen.svg?style=flat)](https://hexdocs.pm/maxo_test_iex/)
-[![Total Download](https://img.shields.io/hexpm/dt/maxo_test_iex.svg?style=flat)](https://hex.pm/packages/maxo_test_iex)
-[![License](https://img.shields.io/hexpm/l/maxo_test_iex.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/blob/main/LICENSE)
-[![CI](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml/badge.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/actions/workflows/ci.yml)
+[![Total Downloads](https://img.shields.io/hexpm/dt/maxo_test_iex.svg?style=flat)](https://hex.pm/packages/maxo_test_iex)
+[![Licence](https://img.shields.io/hexpm/l/maxo_test_iex.svg?style=flat)](https://github.com/maxohq/maxo_test_iex/blob/main/LICENCE)
 
 # TestIex
 
@@ -153,7 +153,6 @@ end
 - https://hex.pm/packages/mix_test_interactive
 - https://github.com/marciol/mix_test_iex
 - https://hex.pm/packages/mr_t
-
 
 ## Support
 
