@@ -2,7 +2,7 @@ defmodule TestIex.MixProject do
   use Mix.Project
 
   @github_url "https://github.com/maxohq/maxo_test_iex"
-  @version "0.1.6"
+  @version "0.1.7"
   @description "Run ExUnit tests from IEx shell."
 
   def project do

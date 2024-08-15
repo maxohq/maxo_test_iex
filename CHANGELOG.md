@@ -1,3 +1,7 @@
+## v0.1.7 (2024-08-15)
+
+Feat: update package `file_system` to 1.0.
+
 ## v0.1.6 (2023-04-20)
 
 Feat: add config for watcher_extensions + refactorings
